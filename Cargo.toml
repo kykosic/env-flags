@@ -4,7 +4,6 @@ description = "A convenience macro for declaring environment variables"
 version = "0.1.0"
 authors = ["Kyle Kosic <kylekosic@gmail.com>"]
 edition = "2021"
-categories = ["static", "config", "macro"]
 keywords = ["static", "env", "environment", "config"]
 license = "MIT"
 documentation = "https://docs.rs/env-flags"
