@@ -17,8 +17,8 @@ jobs:
       - uses: dtolnay/rust-toolchain@nightly
         with:
           components: clippy, rust-src, rustfmt
-      - run: cargo clippy -- -D warnings
       - run: cargo fmt --check
+      - run: cargo clippy -- -D warnings
   test:
     name: Rust Tests
     runs-on: ubuntu-latest
