@@ -1,5 +1,8 @@
 env_flags
 =========
+[<img alt="github" src="https://img.shields.io/badge/github-kykosic/env--flags-a68bbd?style=for-the-badge&logo=github" height="20">](https://github.com/kykosic/env-flags)
+[<img alt="crates.io" src="https://img.shields.io/crates/v/env-flags?style=for-the-badge&color=f0963a&logo=rust" height="20">](https://crates.io/crates/env-flags)
+[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-env--flags-57979e?style=for-the-badge&logo=docs.rs" height="20">](https://docs.rs/env-flags)
 
 This library provides a convenient macro for declaring environment variables.
 
