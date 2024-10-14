@@ -10,6 +10,7 @@ on:
 jobs:
   clippy:
     name: Clippy
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -20,6 +21,7 @@ jobs:
       - run: cargo fmt --check
   test:
     name: Rust Tests
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -29,6 +31,7 @@ jobs:
       - run: cargo test --all-features
   docs:
     name: Docs
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
       RUSTDOCFLAGS: -Dwarnings
