@@ -48,8 +48,10 @@ env_flags! {
 For custom types, you can either specify a parsing function manually (see above `TIMEOUT_MS` example), or you can implement the `ParseEnv` trait. An implementation for `ParseEnv` is included for most std types.
 
 */
+use std::collections::HashSet;
 use std::convert::Infallible;
 use std::fmt;
+use std::hash::Hash;
 use std::net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr};
 use std::ops::Deref;
 use std::path::PathBuf;
@@ -162,6 +164,21 @@ impl ParseEnv for Duration {
 impl<T> ParseEnv for Vec<T>
 where
     T: ParseEnv,
+{
+    type Err = <T as ParseEnv>::Err;
+
+    fn parse_env(value: String) -> Result<Self, Self::Err> {
+        value
+            .split(',')
+            .map(|v| ParseEnv::parse_env(v.to_owned()))
+            .collect()
+    }
+}
+
+/// `HashSet<T>` is by default parsed as comma-separated values.
+impl<T> ParseEnv for HashSet<T>
+where
+    T: ParseEnv + Eq + Hash,
 {
     type Err = <T as ParseEnv>::Err;
 
@@ -736,6 +753,18 @@ mod test {
             ENV_FLAGS_TEST_VEC: Vec<u32>;
         };
         assert_eq!(*ENV_FLAGS_TEST_VEC, vec![1, 2, 3, 4]);
+    }
+
+    #[test]
+    fn test_types_hash_set() {
+        std::env::set_var("ENV_FLAGS_TEST_HASH_SET", "1,2,3,4,1,3");
+        env_flags! {
+            ENV_FLAGS_TEST_HASH_SET: HashSet<u32>;
+        };
+        assert_eq!(
+            *ENV_FLAGS_TEST_HASH_SET,
+            [1, 2, 3, 4].into_iter().collect::<HashSet<u32>>()
+        );
     }
 
     #[test]
