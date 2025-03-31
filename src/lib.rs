@@ -756,6 +756,18 @@ mod test {
     }
 
     #[test]
+    fn test_types_hash_set() {
+        std::env::set_var("ENV_FLAGS_TEST_HASH_SET", "1,2,3,4,1,3");
+        env_flags! {
+            ENV_FLAGS_TEST_HASH_SET: HashSet<u32>;
+        };
+        assert_eq!(
+            *ENV_FLAGS_TEST_HASH_SET,
+            [1, 2, 3, 4].into_iter().collect::<HashSet<u32>>()
+        );
+    }
+
+    #[test]
     fn test_types_bool() {
         std::env::set_var("ENV_FLAGS_TEST_BOOL_TRUE", "true");
         std::env::set_var("ENV_FLAGS_TEST_BOOL_FALSE", "false");
